@@ -19,7 +19,7 @@ A simple Python CLI tool to manage electronic components, allowing you to add, l
 ## Structure
 
 ```bash
-management_system
+ > management_system
 ```
 
 ```python
