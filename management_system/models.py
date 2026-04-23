@@ -39,21 +39,3 @@ class VoltageSource(ElectronicComponent):
         truthiness_verification(voltage_volts, "Invalid Voltage")
         super().__init__(name, manufacturer, max_voltage)
         self._voltage_volts = voltage_volts
-
-
-class Switch(ElectronicComponent):
-    def __init__(self, name, manufacturer, max_voltage, initial_state):
-        super().__init__(name, manufacturer, max_voltage)
-        self._initial_state = initial_state
-
-
-class Diode(ElectronicComponent):
-    def __init__(self, name, manufacturer, max_voltage, driving_direction):
-        super().__init__(name, manufacturer, max_voltage)
-        self._driving_direction = driving_direction
-
-
-class LED(Diode):
-    def __init__(self, name, manufacturer, max_voltage, driving_direction, color):
-        super().__init__(name, manufacturer, max_voltage, driving_direction)
-        self._color = color
