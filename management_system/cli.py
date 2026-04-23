@@ -25,13 +25,14 @@ def circuit_voltage_definition():
   circuit_voltage = float(input("Defina a Tensão do Circuito em VOLTS o qual será utilizada como parâmetro de tolerância para todos os componentes posteriormente adicionados: "))
   circuit = Circuit(circuit_voltage)
   print(f"{circuit} criado com sucesso!")
+  return circuit
 
 
 def main():
     inventory = []
 
     header()
-    circuit_voltage_definition()
+    circuit = circuit_voltage_definition()
     while True:
         menu()
         user_option = input("Selecione uma opção: ").strip()
@@ -41,7 +42,7 @@ def main():
             break
 
         if user_option in ["1", "2", "3"]:
-            inventory.append(component_registrant(user_option))
+            inventory.append(component_registrant(user_option, circuit))
 
         elif user_option == "4":
             if not inventory:

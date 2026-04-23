@@ -5,12 +5,15 @@ Logical Core
 from .models import Resistor, Capacitor, Inductor
 
 
-def component_registrant(user_option):
+def component_registrant(user_option, circuit):
     try:
         print("\n--- Cadastro de Componente ---")
         name = input("Nome do componente: ")
         manufacturer = input("Fabricante: ")
         max_voltage = float(input("Tensão Máxima (V): "))
+        
+        if max_voltage < circuit._voltage:
+            raise ValueError
 
         if user_option == "1":
             measurement_value = float(input("Resistência (Ohms): "))
@@ -29,12 +32,13 @@ def component_registrant(user_option):
             )
 
         print(f"\n{name} adicionado com sucesso!")
-        return electronic_component_object
+        return electronic_component_object # type: ignore
 
     except ValueError:
         print(
-            "\nErro: Por favor, insira valores numéricos válidos para grandezas físicas."
+            "\nErro: Por favor, insira valores numéricos válidos para grandezas físicas ou um valor de tensão máxima compatível."
         )
+    return component_registrant(user_option, circuit)
 
 
 def components_impedance(inventory):

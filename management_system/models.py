@@ -56,7 +56,7 @@ class Capacitor(ElectronicComponent):
     def __str__(self):
         return f"ID: {self._name} | Tipo: {self.__class__.__name__} |"
 
-    def impedance_calc(self, frequence):
+    def impedance_calc(self, frequence): # type: ignore
         if frequence == 0:
             return 999999999
         return 1 / (2 * PI * frequence * self._capacitance_farad)
