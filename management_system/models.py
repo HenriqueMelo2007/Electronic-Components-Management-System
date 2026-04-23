@@ -20,7 +20,7 @@ class Circuit:
         self._voltage = voltage
 
     def __str__(self):
-        return f"The Circuit: {self._voltage}V"
+        return f"Circuito {self._voltage}V"
 
 
 class ElectronicComponent:

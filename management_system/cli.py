@@ -3,6 +3,7 @@ Input management
 """
 
 from .app import component_registrant, list_components
+from .models import Circuit
 
 
 def header():
@@ -19,12 +20,18 @@ def menu():
     print("[4] Listar Componentes e Calcular Impedâncias")
     print("[0] Sair do Sistema")
     print("-" * 50)
+    
+def circuit_voltage_definition():
+  circuit_voltage = float(input("Defina a Tensão do Circuito em VOLTS o qual será utilizada como parâmetro de tolerância para todos os componentes posteriormente adicionados: "))
+  circuit = Circuit(circuit_voltage)
+  print(f"{circuit} criado com sucesso!")
 
 
 def main():
     inventory = []
 
     header()
+    circuit_voltage_definition()
     while True:
         menu()
         user_option = input("Selecione uma opção: ").strip()
