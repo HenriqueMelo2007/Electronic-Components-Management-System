@@ -5,13 +5,15 @@ Logical Core
 from .models import Resistor, Capacitor, Inductor
 
 
-
-def component_registrant(user_option):
+def component_registrant(user_option, circuit):
     try:
         print("\n--- Cadastro de Componente ---")
         name = input("Nome do componente: ")
         manufacturer = input("Fabricante: ")
         max_voltage = float(input("Tensão Máxima (V): "))
+        
+        if max_voltage < circuit._voltage:
+            raise ValueError
 
         if user_option == "1":
             measurement_value = float(input("Resistência (Ohms): "))
@@ -30,30 +32,34 @@ def component_registrant(user_option):
             )
 
         print(f"\n{name} adicionado com sucesso!")
-        return electronic_component_object  
+        return electronic_component_object # type: ignore
 
     except ValueError:
         print(
-            "\nErro: Por favor, insira valores numéricos válidos para grandezas físicas."
+            "\nErro: Por favor, insira valores numéricos válidos para grandezas físicas ou um valor de tensão máxima compatível."
         )
+    return component_registrant(user_option, circuit)
+
+
+def components_impedance(inventory):
+    frequence = float(input("\nInforme a frequência de operação do circuito (Hz): "))
+    print(f"\n--- Análise de Circuito em Série (f = {frequence} Hz) ---")
+
+    total_impedance = 0
+    circuit_diagram = "[Fonte]--"
+
+    for electronic_component in inventory:
+        component_impedance = electronic_component.impedance_calc(frequence)
+        total_impedance += component_impedance
+
+        print(f"{electronic_component} |Z|: {component_impedance:.2f} Ω")
+        circuit_diagram += f"[{electronic_component._name}]--"
+    return circuit_diagram, total_impedance
 
 
 def list_components(inventory):
     try:
-        frequence = float(input("\nInforme a frequência de operação do circuito (Hz): "))
-        print(f"\n--- Análise de Circuito Série (f = {frequence} Hz) ---")
-
-        total_impedance = 0
-        circuit_diagram = "[Fonte]--"
-
-        for electronic_component in inventory:
-            component_impedance = electronic_component.impedance_calc(frequence)
-            total_impedance += component_impedance
-            component_type = electronic_component.__class__.__name__
-
-            print(f"ID: {electronic_component._name} | Tipo: {component_type} | |Z|: {component_impedance:.2f} Ω")
-            circuit_diagram += f"[{electronic_component._name}]--"
-
+        circuit_diagram, total_impedance = components_impedance(inventory)
         print(f"{circuit_diagram}[GND]")
         print("-" * 50)
         print(f"Impedância Total Estimada: {total_impedance:.2f} Ω")
