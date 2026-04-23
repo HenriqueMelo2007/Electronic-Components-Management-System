@@ -3,9 +3,15 @@ Classes definitions
 """
 
 from math import pi
-from .app import truthiness_verification  # type: ignore
+
 
 PI = pi
+
+
+def truthiness_verification(measurement, message):
+    if not (isinstance(measurement, (int, float)) and measurement > 0):
+        raise ValueError(f"{message}")
+    return
 
 
 class ElectronicComponent:
@@ -35,7 +41,7 @@ class Capacitor(ElectronicComponent):
         super().__init__(name, manufacturer, max_voltage)
         self._capacitance_farad = capacitance_farad
 
-    def impedance_calc(self, frequence):  # type: ignore
+    def impedance_calc(self, frequence):
         if frequence == 0:
             return 999999999
         return 1 / (2 * PI * frequence * self._capacitance_farad)
@@ -49,10 +55,3 @@ class Inductor(ElectronicComponent):
 
     def impedance_calc(self, frequence):
         return 2 * PI * frequence * self._inductance_henry
-
-
-class VoltageSource(ElectronicComponent):
-    def __init__(self, name, manufacturer, max_voltage, voltage_volts):
-        truthiness_verification(voltage_volts, "Invalid Voltage")
-        super().__init__(name, manufacturer, max_voltage)
-        self._voltage_volts = voltage_volts

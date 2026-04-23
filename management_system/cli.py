@@ -2,12 +2,12 @@
 Input management
 """
 
-from .app import component_registrant
+from .app import component_registrant, list_components
 
 
 def header():
     print("-" * 50)
-    print(f"{'Sistema de Gerenciamento de Componentes Eletrônicos':^50}")
+    print(f"{'Sistema de Gerenciamento de Componentes Eletrônicos'}")
     print("Bem-vindo")
     print("-" * 50)
 
@@ -41,31 +41,7 @@ def main():
                 print("\nO inventário está vazio.")
                 continue
 
-            try:
-                freq = float(
-                    input("\nInforme a frequência de operação do circuito (Hz): ")
-                )
-                print(f"\n--- Análise de Circuito Série (f = {freq} Hz) ---")
-
-                impedancia_total = 0
-                # Visualização do circuito
-                circuito_visual = "[Fonte]--"
-
-                for c in inventory:
-                    z = c.impedance_calc(freq)
-                    impedancia_total += z
-                    tipo = c.__class__.__name__
-
-                    print(f"ID: {c._name:10} | Tipo: {tipo:10} | |Z|: {z:,.2f} Ω")
-                    circuito_visual += f"[{c._name}]--"
-
-                print(f"{circuito_visual}[GND]")
-                print("-" * 50)
-                print(f"Impedância Total Estimada: {impedancia_total:,.2f} Ω")
-                print("Nota: Cálculo escalar (soma linear das magnitudes).")
-
-            except ValueError:
-                print("\n❌ Erro: Frequência deve ser um número.")
+            list_components(inventory)
 
         else:
             print("\nOpção inválida. Tente novamente.")
