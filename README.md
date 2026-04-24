@@ -60,13 +60,15 @@ O comportamento dos componentes segue estas regras:
 
 - **Resistor**: impedância igual ao valor da resistência
 - **Capacitor**:  
-  \[
-  X_c = \frac{1}{2\pi fC}
-  \]
-  Em frequência zero, retorna um valor muito alto para representar circuito aberto
+  A reatância capacitiva é calculada como:
+1 dividido por (2 vezes pi vezes a frequência vezes a capacitância).
+Em outras palavras:
+quanto maior a frequência ou a capacitância, menor será a impedância.
+Caso a frequência seja zero (corrente contínua), o capacitor se comporta como um circuito aberto, ou seja, a impedância tende a um valor muito alto.
 - **Indutor**:  
-  \[
-  X_l = 2\pi fL
-  \]
+  A reatância indutiva é calculada como:
+2 vezes pi vezes a frequência vezes a indutância.
+Ou seja:
+quanto maior a frequência ou a indutância, maior será a impedância.
 
 A impedância total exibida é uma **soma linear das magnitudes**, usada como cálculo escalar simplificado.
